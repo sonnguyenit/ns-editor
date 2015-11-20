@@ -4,7 +4,8 @@
   "description": "A realtime markdown editor for webapp",
   "main": "server.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/sonnguyenit/ns-editor",
   "dependencies": {
+    "bower": "^1.6.5",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "redis": "^2.3.1",
