@@ -1,0 +1,29 @@
+{
+  "name": "ns-editor",
+  "version": "0.0.1",
+  "description": "A realtime markdown editor for webapp",
+  "main": "server.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sonnguyenit/ns-editor.git"
+  },
+  "keywords": [
+    "markdown",
+    "editor"
+  ],
+  "author": "sonnguyenit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sonnguyenit/ns-editor/issues"
+  },
+  "homepage": "https://github.com/sonnguyenit/ns-editor",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "redis": "^2.3.1",
+    "share": "^0.7.40"
+  }
+}
