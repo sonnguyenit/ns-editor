@@ -19,6 +19,7 @@ Then User A will probably be interested in item 2
 - Support Vector Machines
 
 
+http://stackoverflow.com/questions/1407841/how-to-create-my-own-recommendation-engine?rq=1
 
 I've built up one for a video portal myself. The main idea that I had was about collecting data about everything:
 
