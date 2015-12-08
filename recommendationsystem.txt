@@ -1,0 +1,65 @@
+
+
+#At it's most basic, most recommendation systems work by saying one of two things.
+
+##User-based recommendations:
+If User A likes Items 1,2,3,4, and 5,
+And User B likes Items 1,2,3, and 4
+Then User B is quite likely to also like Item 5
+
+##Item-based recommendations:
+If Users who purchase item 1 are also disproportionately likely to purchase item 2
+And User A purchased item 1
+Then User A will probably be interested in item 2
+
+##And here's a brain dump of algorithms you ought to know:
+- Set similarity (Jaccard index & Tanimoto coefficient)
+- n-Dimensional Euclidean distance
+- k-means algorithm
+- Support Vector Machines
+
+
+
+I've built up one for a video portal myself. The main idea that I had was about collecting data about everything:
+
+    Who uploaded a video?
+    Who commented on a video?
+    Which tags where created?
+    Who visited the video? (also tracking anonymous visitors)
+    Who favorited a video?
+    Who rated a video?
+    Which channels was the video assigned to?
+    Text streams of title, description, tags, channels and comments are collected by a fulltext indexer which puts weight on each of the data sources.
+
+Next I created functions which return lists of (id,weight) tuples for each of the above points. Some only consider a limited amount of videos (eg last 50), some modify the weight by eg rating, tag count (more often tagged = less expressive). There are functions that return the following lists:
+
+    Similar videos by fulltext search
+    Videos uploaded by the same user
+    Other videos the users from these comments also commented on
+    Other videos the users from these favorites also favorited
+    Other videos the raters from these ratings also rated on (weighted)
+    Other videos in the same channels
+    Other videos with the same tags (weighted by "expressiveness" of tags)
+    Other videos played by people who played this video (XY latest plays)
+    Similar videos by comments fulltext
+    Similar videos by title fulltext
+    Similar videos by description fulltext
+    Similar videos by tags fulltext
+
+All these will be combined into a single list by just summing up the weights by video ids, then sorted by weight. This works pretty well for around 1000 videos now. But you need to do background processing or extreme caching for this to be speedy.
+
+I'm hoping that I can reduce this to a generic recommendation engine or similarity calculator soon and release as a rails/activerecord plugin. Currently it's still a well integrated part of my project.
+
+To give a small hint, in ruby code it looks like this:
+
+def related_by_tags
+  tag_names.find(:all, :include => :videos).inject([]) { |result,t|
+    result + t.video_ids.map { |v|
+      [v, TAG_WEIGHT / (0.1 + Math.log(t.video_ids.length) / Math.log(2))]
+    }
+  }
+end
+
+I would be interested on how other people solve such algorithms.
+
+
